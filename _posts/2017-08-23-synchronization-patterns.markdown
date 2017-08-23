@@ -213,7 +213,7 @@ memory: Map<Address, Map<Timestamp, (Value, View)>>
 
 Let's see what happens for the example above. Suppose `th1` stored `data = 42` at timestamp `10`,
 and `flag = 1` at timestamp 5, as described in the timeline below. At the time of writing `flag =
-1`, the thread `v1`'s view is `[data@10, flag@5]`, and this view is annotated in the message
+1`, the thread `th1`'s view is `[data@10, flag@5]`, and this view is annotated in the message
 `flag@5` because of the `Release` ordering. When `th2` reads `flag = 1`, its view becomes `[data@10,
 flag@5]` thanks to the `Acquire` ordering, forcing the later load from `data` to read `42` (or a
 message written in a later timestamp).
