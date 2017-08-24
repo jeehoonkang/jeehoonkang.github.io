@@ -314,10 +314,11 @@ theory, you can think of the following dimensions of variation:
 
 - **The bridge of piggybacking.** In `Release`-`Acquire` synchronization, a `Release`-write to the
   piggybacking address (`flag` in the example) and an `Acquire`-read from the address form a
-  "bridge" of piggybacking. We may call this WR (write-read) bridge. You can imagine RRc bridge,
-  whose two reads from the piggybacking address are ordered by the coherence order; RWc bridge of a
-  read and a coherence-later write to the piggybacking address; WRc bridge; and WWc bridge. (For
-  experts: you may call C/C++ release sequence "WRu bridge".)
+  "bridge" of piggybacking. We may call this WR (write-read) bridge. You can imagine RRc (read-read
+  via coherence) bridge, whose two reads from the piggybacking address are ordered by the coherence
+  order; RWc bridge of a read and a coherence-later write to the piggybacking address; WRc bridge;
+  and WWc bridge. (For experts: you may call C/C++ release sequence "(WR)* bridge" ("*" means the
+  Kleene Star).)
 
 - **Synchronization marker**. In the example, the `Release` and `Acquire` orderings are annotated in
   the store and load instructions. Instead, you can mark a program point earlier than the bridge's
@@ -389,7 +390,7 @@ The following is an implementation of sequence lock. Function `new()` creates a 
 the writer can access the protected data, and `read()` returns the protected data:
 
 ```rust
-struct<T: Copy> Seqlock<T> {
+struct<T> Seqlock<T: Copy> {
     lock: AtomicUsize,
     data: Atomic<T>,
 }
@@ -680,6 +681,14 @@ I hope this post got its job done: clarifying the essence of relaxed-memory conc
 identifying synchronization patterns, thereby helping you start writing concurrent programs. I hope
 concurrency is no longer a black magic to you as was it to me two years ago, but a disciplined
 subject of modern systems programming. Happy hacking concurrency!
+
+
+
+### Edit
+
+I would like to thank @foollbar and @stjepang for their helpful comments to an earlier version of
+this post.
+
 
 [promising]: http://sf.snu.ac.kr/promise-concurrency
 [scfix]: http://plv.mpi-sws.org/scfix/
