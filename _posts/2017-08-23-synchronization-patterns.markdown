@@ -593,7 +593,7 @@ the following orders only:
   By interleaving property, `flag[0] = true` and `flag[1] = true` should be acknowledged after both
   `B0` and `B1`. Without loss of generality, suppose that `th0` wrote `turn = 1` before `th1` did
   `turn = 0` w.r.t. the coherence order. Then `th1`'s `lock()` should spin until `th0` writes
-  `flag[0] = true` in `unlock()`. By positive piggybacking synchronization on `flag[0]`, the view
+  `flag[0] = false` in `unlock()`. By positive piggybacking synchronization on `flag[0]`, the view
   at the end of `th0`'s critical section is sent to the beginning of `th1`s critical section.
 
 
@@ -686,8 +686,8 @@ subject of modern systems programming. Happy hacking concurrency!
 
 ### Edit
 
-I would like to thank @foollbar and @stjepang for their helpful comments to an earlier version of
-this post.
+I would like to thank @foollbar, @stjepang, and @Vtec234 for their helpful comments to an earlier
+version of this post.
 
 
 [promising]: http://sf.snu.ac.kr/promise-concurrency
