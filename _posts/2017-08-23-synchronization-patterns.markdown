@@ -391,13 +391,13 @@ the writer can access the protected data, and `read()` returns the protected dat
 
 ```rust
 struct<T> Seqlock<T: Copy> {
-    lock: AtomicUsize,
+    seq: AtomicUsize,
     data: Atomic<T>,
 }
 
 impl<T: Copy> Seqlock<T> {
     fn new(data: T) -> Seqlock<T> {
-        Seqlock { lock: 0, data: Atomic::new(data), }
+        Seqlock { seq: 0, data: Atomic::new(data), }
     }
 
     fn writer_lock(&self) -> (usize, &mut T) {
@@ -686,8 +686,8 @@ subject of modern systems programming. Happy hacking concurrency!
 
 ### Edit
 
-I would like to thank @foollbar, @stjepang, and @Vtec234 for their helpful comments to an earlier
-version of this post.
+I would like to thank @foollbar, @stjepang, @Vtec234, and Benjamin Fry for their helpful comments to
+an earlier version of this post.
 
 
 [promising]: http://sf.snu.ac.kr/promise-concurrency
