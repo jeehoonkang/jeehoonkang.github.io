@@ -582,8 +582,8 @@ the following orders only:
 
 - `A0` -> `B0` -> `A1` -> `B1`.
 
-  By interleaving property, `flag[0] = true` and `turn = 0` should be acknowledged after `A1`. So
-  `th1` should write `turn = 1` after `turn = 0` w.r.t. the coherence order, and it should spin
+  By interleaving property, `flag[0] = true` and `turn = 1` should be acknowledged after `A1`. So
+  `th1` should write `turn = 0` after `turn = 1` w.r.t. the coherence order, and it should spin
   until `th0` write `flag[0] = false` in `unlock()`. By positive piggybacking synchronization on
   `flag[0]`, the view at the end of `th0`'s critical section is sent to the beginning of `th1`s
   critical section.
@@ -686,8 +686,8 @@ subject of modern systems programming. Happy hacking concurrency!
 
 ### Edit
 
-I would like to thank @foollbar, @stjepang, @Vtec234, and Benjamin Fry for their helpful comments to
-an earlier version of this post.
+I would like to thank @foollbar, @stjepang, @Vtec234, Benjamin Fry, and Derek Dreyer for their
+helpful comments to an earlier version of this post.
 
 
 [promising]: http://sf.snu.ac.kr/promise-concurrency
