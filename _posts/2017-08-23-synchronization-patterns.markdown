@@ -405,7 +405,7 @@ impl<T: Copy> Seqlock<T> {
             let seq = self.seq.load(Relaxed);
             if (seq & 1 != 0) { continue };
 
-            if (self.seq.compare_and_swap(seq, seq + 1) != seq) { continue };
+            if (self.seq.compare_and_swap(seq, seq + 1, Acquire) != seq) { continue };
 
             fence(Release);
             return (seq + 2, self.data as &mut T); // It's not Rust exactly..
@@ -686,8 +686,8 @@ subject of modern systems programming. Happy hacking concurrency!
 
 ### Edit
 
-I would like to thank @foollbar, @stjepang, @Vtec234, Benjamin Fry, and Derek Dreyer for their
-helpful comments to an earlier version of this post.
+I would like to thank @foollbar, @stjepang, @Vtec234, Benjamin Fry, Derek Dreyer, and Gil Hur for
+their helpful comments to an earlier version of this post.
 
 
 [promising]: http://sf.snu.ac.kr/promise-concurrency
